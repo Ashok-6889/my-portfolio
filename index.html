@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ashok Nelluri — DevOps Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+    [data-theme="dark"]{
+      --bg:#07090F;
+      --bg2:#0C1018;
+      --bg3:#111620;
+      --bg4:#161C28;
+      --text:#E2EEFF;
+      --muted:#6B82A8;
+      --border:rgba(80,140,255,0.1);
+      --primary:#4F8EFF;
+      --accent:#38BDF8;
+      --grad:linear-gradient(135deg,#4F8EFF,#38BDF8);
+      --nav-bg:rgba(7,9,15,0.88);
+      --glow:rgba(79,142,255,0.15);
+    }
+    [data-theme="light"]{
+      --bg:#F5F8FF;
+      --bg2:#EBF0FF;
+      --bg3:#FFFFFF;
+      --bg4:#FFFFFF;
+      --text:#0A1628;
+      --muted:#4A6080;
+      --border:rgba(37,99,235,0.12);
+      --primary:#2563EB;
+      --accent:#0284C7;
+      --grad:linear-gradient(135deg,#2563EB,#0284C7);
+      --nav-bg:rgba(245,248,255,0.92);
+      --glow:rgba(37,99,235,0.1);
+    }
+
+    html{scroll-behavior:smooth;}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;transition:background .4s,color .4s;}
+
+    /* ── NAV ── */
+    nav{
+      position:fixed;top:0;width:100%;z-index:200;
+      background:var(--nav-bg);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
+      padding:0 4rem;height:64px;
+      display:flex;align-items:center;justify-content:space-between;
+      transition:background .4s,border-color .4s;
+    }
+    .nav-name{
+      font-family:'Cormorant Garamond',serif;
+      font-size:1.25rem;font-weight:700;
+      color:var(--text);text-decoration:none;
+      letter-spacing:.01em;
+    }
+    .nav-name span{color:var(--primary);}
+    .nav-right{display:flex;align-items:center;gap:2.5rem;}
+    .nav-links{display:flex;gap:2rem;list-style:none;}
+    .nav-links a{
+      font-size:.8rem;font-weight:500;
+      color:var(--muted);text-decoration:none;
+      letter-spacing:.08em;text-transform:uppercase;
+      transition:color .2s;
+    }
+    .nav-links a:hover{color:var(--primary);}
+
+    /* theme toggle */
+    .theme-btn{
+      width:40px;height:22px;
+      background:var(--bg3);
+      border:1.5px solid var(--border);
+      border-radius:100px;position:relative;
+      cursor:pointer;transition:all .3s;flex-shrink:0;
+    }
+    .theme-btn::after{
+      content:'';position:absolute;top:2px;left:2px;
+      width:15px;height:15px;border-radius:50%;
+      background:var(--grad);
+      transition:transform .3s;
+      box-shadow:0 0 8px var(--glow);
+    }
+    [data-theme="light"] .theme-btn::after{transform:translateX(18px);}
+
+    /* ── HERO ── */
+    .hero{
+      min-height:100vh;
+      display:flex;align-items:center;
+      padding:80px 4rem 4rem;
+      position:relative;overflow:hidden;
+    }
+    .hero-bg{
+      position:absolute;inset:0;pointer-events:none;
+      background:
+        radial-gradient(ellipse 70% 60% at 75% 20%,rgba(79,142,255,0.07) 0%,transparent 65%),
+        radial-gradient(ellipse 50% 50% at 20% 80%,rgba(56,189,248,0.05) 0%,transparent 65%);
+    }
+    .hero-dots{
+      position:absolute;inset:0;pointer-events:none;
+      background-image:radial-gradient(circle,var(--border) 1px,transparent 1px);
+      background-size:28px 28px;
+      opacity:.7;
+    }
+    .hero-inner{position:relative;z-index:2;max-width:1100px;width:100%;}
+
+    .hero-location{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:.8rem;font-weight:500;color:var(--muted);
+      letter-spacing:.06em;text-transform:uppercase;
+      margin-bottom:1.6rem;
+      opacity:0;animation:fadeUp .6s ease forwards .15s;
+    }
+    .live-dot{
+      width:7px;height:7px;border-radius:50%;
+      background:#22C55E;
+      box-shadow:0 0 8px #22C55E;
+      animation:blink 2s ease-in-out infinite;
+    }
+    @keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+    .hero h1{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(3rem,7vw,5.5rem);
+      font-weight:700;line-height:1;
+      letter-spacing:-.02em;
+      margin-bottom:1.4rem;
+      opacity:0;animation:fadeUp .7s ease forwards .3s;
+    }
+    .hero h1 em{
+      font-style:italic;
+      background:var(--grad);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    .hero-sub{
+      font-size:1.05rem;font-weight:500;
+      color:var(--muted);margin-bottom:1rem;
+      opacity:0;animation:fadeUp .7s ease forwards .45s;
+    }
+    .hero-desc{
+      max-width:520px;font-size:.95rem;
+      color:var(--muted);line-height:1.8;
+      margin-bottom:2.5rem;
+      opacity:0;animation:fadeUp .7s ease forwards .6s;
+    }
+
+    /* stats row */
+    .hero-stats{
+      display:flex;gap:2.5rem;
+      margin-bottom:2.5rem;
+      opacity:0;animation:fadeUp .7s ease forwards .75s;
+    }
+    .stat{}
+    .stat-n{
+      font-family:'Cormorant Garamond',serif;
+      font-size:2.2rem;font-weight:700;
+      background:var(--grad);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      line-height:1;
+    }
+    .stat-l{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:4px;}
+
+    .hero-cta{
+      display:flex;gap:1rem;flex-wrap:wrap;
+      opacity:0;animation:fadeUp .7s ease forwards .9s;
+    }
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:11px 24px;border-radius:8px;
+      font-family:'DM Sans',sans-serif;
+      font-size:.88rem;font-weight:600;
+      text-decoration:none;cursor:pointer;
+      transition:all .25s;border:none;
+    }
+    .btn-primary{background:var(--grad);color:#fff;box-shadow:0 4px 20px var(--glow);}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--glow);}
+    .btn-ghost{background:transparent;color:var(--text);border:1.5px solid var(--border);}
+    .btn-ghost:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-2px);}
+
+    /* ── SECTIONS ── */
+    section{padding:6rem 4rem;}
+    .container{max-width:1100px;margin:0 auto;}
+    .sec-num{
+      font-size:.72rem;font-weight:600;
+      letter-spacing:.18em;text-transform:uppercase;
+      color:var(--primary);margin-bottom:.5rem;
+      display:flex;align-items:center;gap:10px;
+    }
+    .sec-num::after{content:'';flex:0 0 32px;height:1px;background:var(--primary);opacity:.5;}
+    .sec-title{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2rem,4vw,3rem);
+      font-weight:700;line-height:1.1;
+      letter-spacing:-.01em;margin-bottom:3rem;
+    }
+    .sec-title em{font-style:italic;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+    /* ── ABOUT ── */
+    #about{background:var(--bg2);transition:background .4s;}
+    .about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:5rem;align-items:start;}
+    .about-text p{font-size:.95rem;color:var(--muted);line-height:1.85;margin-bottom:1.2rem;}
+    .about-text p strong{color:var(--text);font-weight:600;}
+    .about-cards{display:flex;flex-direction:column;gap:1rem;}
+    .about-card{
+      background:var(--bg3);border:1px solid var(--border);
+      border-radius:12px;padding:1.2rem 1.4rem;
+      display:flex;gap:1rem;align-items:flex-start;
+      transition:all .3s;
+      opacity:0;transform:translateY(16px);
+    }
+    .about-card.visible{opacity:1;transform:translateY(0);}
+    .about-card:hover{border-color:var(--primary);transform:translateY(-2px);}
+    .ac-icon{
+      width:40px;height:40px;border-radius:9px;flex-shrink:0;
+      background:rgba(79,142,255,0.1);border:1px solid rgba(79,142,255,0.2);
+      display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+    }
+    .ac-title{font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:2px;}
+    .ac-sub{font-size:.78rem;color:var(--muted);}
+
+    /* ── SKILLS ── */
+    #skills{background:var(--bg);transition:background .4s;}
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem;}
+    .sk-card{
+      background:var(--bg3);border:1px solid var(--border);
+      border-radius:14px;padding:1.6rem;
+      transition:all .3s;
+      opacity:0;transform:translateY(20px);
+      position:relative;overflow:hidden;
+    }
+    .sk-card::after{
+      content:'';position:absolute;top:0;left:0;right:0;height:2px;
+      background:var(--grad);opacity:0;transition:opacity .3s;
+    }
+    .sk-card.visible{opacity:1;transform:translateY(0);}
+    .sk-card:hover{border-color:rgba(79,142,255,.25);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.2);}
+    .sk-card:hover::after{opacity:1;}
+    .sk-head{display:flex;align-items:center;gap:10px;margin-bottom:1rem;}
+    .sk-icon{
+      width:34px;height:34px;border-radius:8px;
+      background:rgba(79,142,255,.1);border:1px solid rgba(79,142,255,.2);
+      display:flex;align-items:center;justify-content:center;font-size:.95rem;
+    }
+    .sk-cat{font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text);}
+    .sk-tags{display:flex;flex-wrap:wrap;gap:6px;}
+    .tag{
+      background:var(--bg2);border:1px solid var(--border);
+      color:var(--muted);font-size:.75rem;font-weight:500;
+      padding:3px 10px;border-radius:5px;transition:all .2s;cursor:default;
+    }
+    .tag:hover{background:rgba(79,142,255,.08);border-color:rgba(79,142,255,.3);color:var(--primary);}
+
+    /* ── EXPERIENCE ── */
+    #experience{background:var(--bg2);transition:background .4s;}
+    .exp-list{display:flex;flex-direction:column;gap:1.5rem;}
+    .exp-item{
+      background:var(--bg3);border:1px solid var(--border);
+      border-radius:14px;padding:2rem;
+      position:relative;overflow:hidden;
+      opacity:0;transform:translateY(20px);
+      transition:all .5s ease;
+    }
+    .exp-item::before{
+      content:'';position:absolute;left:0;top:0;bottom:0;
+      width:3px;background:var(--grad);
+    }
+    .exp-item.visible{opacity:1;transform:translateY(0);}
+    .exp-item:hover{border-color:rgba(79,142,255,.25);box-shadow:0 16px 40px rgba(0,0,0,.2);}
+    .exp-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;margin-bottom:1.2rem;}
+    .exp-role{
+      font-family:'Cormorant Garamond',serif;
+      font-size:1.3rem;font-weight:700;margin-bottom:3px;
+    }
+    .exp-company{font-size:.85rem;color:var(--primary);font-weight:500;}
+    .exp-loc{font-size:.78rem;color:var(--muted);margin-top:2px;}
+    .exp-date{
+      background:rgba(79,142,255,.08);border:1px solid rgba(79,142,255,.2);
+      color:var(--primary);font-size:.74rem;font-weight:600;
+      padding:4px 14px;border-radius:100px;white-space:nowrap;
+    }
+    .exp-bullets{list-style:none;display:flex;flex-direction:column;gap:8px;}
+    .exp-bullets li{
+      font-size:.88rem;color:var(--muted);
+      padding-left:1.2rem;position:relative;line-height:1.6;
+    }
+    .exp-bullets li::before{
+      content:'';position:absolute;left:0;top:9px;
+      width:5px;height:5px;border-radius:50%;
+      background:var(--primary);opacity:.7;
+    }
+
+    /* ── PROJECTS ── */
+    #projects{background:var(--bg);transition:background .4s;}
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.4rem;}
+    .proj-card{
+      background:var(--bg3);border:1px solid var(--border);
+      border-radius:14px;padding:2rem;
+      transition:all .3s;
+      opacity:0;transform:translateY(20px);
+      position:relative;overflow:hidden;
+    }
+    .proj-card::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:3px;
+      background:var(--grad);
+    }
+    .proj-card.visible{opacity:1;transform:translateY(0);}
+    .proj-card:hover{border-color:rgba(79,142,255,.25);transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.2);}
+    .proj-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;}
+    .proj-icon{
+      width:44px;height:44px;border-radius:10px;
+      background:rgba(79,142,255,.1);border:1px solid rgba(79,142,255,.2);
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.2rem;flex-shrink:0;
+    }
+    .proj-link{
+      display:inline-flex;align-items:center;gap:5px;
+      padding:5px 12px;border-radius:6px;
+      font-size:.75rem;font-weight:600;
+      text-decoration:none;transition:all .2s;
+      border:1px solid var(--border);color:var(--muted);
+      background:var(--bg2);
+    }
+    .proj-link:hover{border-color:var(--primary);color:var(--primary);}
+    .proj-title{
+      font-family:'Cormorant Garamond',serif;
+      font-size:1.2rem;font-weight:700;
+      margin-bottom:.7rem;line-height:1.3;
+    }
+    .proj-desc{font-size:.87rem;color:var(--muted);line-height:1.75;margin-bottom:1.2rem;}
+    .proj-tags{display:flex;flex-wrap:wrap;gap:6px;}
+    .proj-tag{
+      background:rgba(56,189,248,.07);
+      border:1px solid rgba(56,189,248,.2);
+      color:var(--accent);
+      font-size:.72rem;font-weight:600;
+      padding:3px 10px;border-radius:5px;
+    }
+
+    /* ── CONTACT ── */
+    #contact{background:var(--bg2);transition:background .4s;}
+    .contact-wrap{display:grid;grid-template-columns:1fr 1.1fr;gap:5rem;align-items:start;}
+    .contact-desc{font-size:.95rem;color:var(--muted);line-height:1.8;margin-bottom:2rem;}
+    .c-links{display:flex;flex-direction:column;gap:.8rem;}
+    .c-link{
+      display:flex;align-items:center;gap:12px;
+      background:var(--bg3);border:1px solid var(--border);
+      border-radius:10px;padding:.9rem 1.1rem;
+      color:var(--muted);text-decoration:none;
+      font-size:.88rem;transition:all .25s;
+    }
+    .c-link:hover{border-color:var(--primary);color:var(--primary);transform:translateX(5px);}
+    .c-ico{
+      width:32px;height:32px;border-radius:8px;
+      background:rgba(79,142,255,.08);
+      border:1px solid rgba(79,142,255,.15);
+      display:flex;align-items:center;justify-content:center;
+      font-size:.85rem;flex-shrink:0;
+    }
+    .contact-form{display:flex;flex-direction:column;gap:1rem;}
+    .contact-form input,.contact-form textarea{
+      background:var(--bg3);border:1px solid var(--border);
+      color:var(--text);border-radius:10px;
+      padding:12px 16px;
+      font-family:'DM Sans',sans-serif;font-size:.88rem;
+      outline:none;resize:vertical;
+      transition:border-color .2s,box-shadow .2s,background .4s;
+    }
+    .contact-form input::placeholder,.contact-form textarea::placeholder{color:var(--muted);opacity:.5;}
+    .contact-form input:focus,.contact-form textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--glow);}
+    .btn-send{
+      background:var(--grad);color:#fff;border:none;
+      border-radius:10px;padding:12px 24px;
+      font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:700;
+      cursor:pointer;transition:all .25s;align-self:flex-start;
+      box-shadow:0 4px 20px var(--glow);
+    }
+    .btn-send:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--glow);}
+
+    /* ── FOOTER ── */
+    footer{
+      background:var(--bg);border-top:1px solid var(--border);
+      padding:1.8rem 4rem;
+      display:flex;align-items:center;justify-content:space-between;
+      transition:background .4s;
+    }
+    .foot-name{
+      font-family:'Cormorant Garamond',serif;
+      font-size:1rem;font-weight:700;color:var(--text);
+    }
+    .foot-name span{color:var(--primary);}
+    footer p{font-size:.78rem;color:var(--muted);}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+    @media(max-width:768px){
+      nav{padding:0 1.5rem;}
+      .nav-links{display:none;}
+      section{padding:4rem 1.5rem;}
+      .hero{padding:80px 1.5rem 3rem;}
+      .about-grid{grid-template-columns:1fr;gap:2.5rem;}
+      .contact-wrap{grid-template-columns:1fr;gap:3rem;}
+      footer{flex-direction:column;gap:.5rem;text-align:center;padding:1.5rem;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-name" href="#">Ashok <span>Nelluri</span></a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-dots"></div>
+  <div class="hero-inner">
+    <div class="hero-location">
+      <span class="live-dot"></span>
+      DevOps Engineer · Hyderabad, India
+    </div>
+    <h1>Ashok <em>Nelluri</em></h1>
+    <p class="hero-sub">DevOps Engineer · AWS Specialist</p>
+    <p class="hero-desc">
+      Building resilient cloud infrastructure, automating CI/CD pipelines, and deploying containerized applications on AWS at scale — focused on speed, security, and 99.9% uptime.
+    </p>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-n">3+</div>
+        <div class="stat-l">Years Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">99.9%</div>
+        <div class="stat-l">Production Uptime</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">40%</div>
+        <div class="stat-l">Faster Provisioning</div>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="#experience" class="btn btn-primary">View My Work</a>
+      <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="sec-num">01 /</div>
+    <h2 class="sec-title">About <em>Me</em></h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a <strong>results-driven DevOps Engineer</strong> with 3+ years of hands-on experience automating infrastructure, building CI/CD pipelines, and deploying containerized workloads across AWS environments.</p>
+        <p>My core expertise spans <strong>Jenkins, Docker, Kubernetes (EKS), Terraform, and Ansible</strong>, combined with deep knowledge of AWS services — enabling me to build scalable, secure, and cost-efficient cloud solutions.</p>
+        <p>At Tata Consultancy Services for client Ericsson, I led DevOps initiatives from infrastructure provisioning through to production deployment — integrating <strong>SonarQube and Trivy</strong> for security, and <strong>Prometheus & Grafana</strong> for observability. I care deeply about automation, reliability, and clean infrastructure-as-code.</p>
+        <p>I hold a <strong>B.Tech in Electronics & Communication Engineering</strong> from VSM College of Engineering and multiple AWS certifications that keep my skills sharp and current.</p>
+      </div>
+      <div class="about-cards">
+        <div class="about-card">
+          <div class="ac-icon">☁️</div>
+          <div>
+            <div class="ac-title">AWS IAM Certification</div>
+            <div class="ac-sub">Amazon Web Services · Verified</div>
+          </div>
+        </div>
+        <div class="about-card">
+          <div class="ac-icon">🏅</div>
+          <div>
+            <div class="ac-title">AWS Cloud Practitioner</div>
+            <div class="ac-sub">Amazon Web Services · Verified</div>
+          </div>
+        </div>
+        <div class="about-card">
+          <div class="ac-icon">🐧</div>
+          <div>
+            <div class="ac-title">Linux Administration</div>
+            <div class="ac-sub">Udemy · Completed</div>
+          </div>
+        </div>
+        <div class="about-card">
+          <div class="ac-icon">🎓</div>
+          <div>
+            <div class="ac-title">B.Tech — ECE</div>
+            <div class="ac-sub">VSM College of Engineering · 2020</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="sec-num">02 /</div>
+    <h2 class="sec-title">Technical <em>Skills</em></h2>
+    <div class="skills-grid">
+      <div class="sk-card">
+        <div class="sk-head"><div class="sk-icon">⚙️</div><div class="sk-cat">CI/CD & DevOps</div></div>
+        <div class="sk-tags">
+          <span class="tag">Jenkins</span><span class="tag">Git</span><span class="tag">GitHub</span>
+          <span class="tag">AWS DevOps</span><span class="tag">Maven</span><span class="tag">Nexus</span>
+          <span class="tag">SonarQube</span><span class="tag">Argo CD</span>
+        </div>
+      </div>
+      <div class="sk-card">
+        <div class="sk-head"><div class="sk-icon">☁️</div><div class="sk-cat">Cloud · AWS</div></div>
+        <div class="sk-tags">
+          <span class="tag">EC2</span><span class="tag">S3</span><span class="tag">RDS</span>
+          <span class="tag">EKS</span><span class="tag">ECS</span><span class="tag">IAM</span>
+          <span class="tag">Lambda</span><span class="tag">VPC</span><span class="tag">ECR</span><span class="tag">CloudWatch</span>
+        </div>
+      </div>
+      <div class="sk-card">
+        <div class="sk-head"><div class="sk-icon">🐳</div><div class="sk-cat">Containers & Orchestration</div></div>
+        <div class="sk-tags">
+          <span class="tag">Docker</span><span class="tag">Kubernetes (EKS)</span>
+          <span class="tag">Docker Swarm</span><span class="tag">Helm</span>
+          <span class="tag">YAML</span><span class="tag">DockerHub</span>
+        </div>
+      </div>
+      <div class="sk-card">
+        <div class="sk-head"><div class="sk-icon">🏗️</div><div class="sk-cat">IaC & Automation</div></div>
+        <div class="sk-tags">
+          <span class="tag">Terraform</span><span class="tag">Ansible</span>
+          <span class="tag">Bash</span><span class="tag">Python</span><span class="tag">Linux (RHEL)</span>
+        </div>
+      </div>
+      <div class="sk-card">
+        <div class="sk-head"><div class="sk-icon">📊</div><div class="sk-cat">Monitoring & Security</div></div>
+        <div class="sk-tags">
+          <span class="tag">Prometheus</span><span class="tag">Grafana</span>
+          <span class="tag">New Relic</span><span class="tag">ELK Stack</span>
+          <span class="tag">Trivy</span><span class="tag">IAM Policies</span>
+        </div>
+      </div>
+      <div class="sk-card">
+        <div class="sk-head"><div class="sk-icon">🤝</div><div class="sk-cat">Tools & Process</div></div>
+        <div class="sk-tags">
+          <span class="tag">Jira</span><span class="tag">Agile/Scrum</span>
+          <span class="tag">Incident Response</span><span class="tag">RCA</span>
+          <span class="tag">Documentation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="sec-num">03 /</div>
+    <h2 class="sec-title">Work <em>Experience</em></h2>
+    <div class="exp-list">
+      <div class="exp-item">
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">DevOps Engineer</div>
+            <div class="exp-company">Tata Consultancy Services</div>
+            <div class="exp-loc">📍 Hyderabad, India · Client: Ericsson</div>
+          </div>
+          <span class="exp-date">May 2022 – Aug 2025</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Streamlined CI/CD pipelines using Jenkins, reducing release defects by 25%</li>
+          <li>Provisioned AWS infrastructure (EC2, S3, IAM, VPC, EKS, ECR) using Terraform and Ansible, cutting provisioning time by 40%</li>
+          <li>Deployed containerized applications using Docker and Kubernetes (EKS) maintaining 99.9% service uptime</li>
+          <li>Integrated SonarQube and Trivy into CI/CD pipelines, reducing vulnerabilities by 30% before deployment</li>
+          <li>Configured Prometheus and Grafana for monitoring and alerting, improving incident detection by 35%</li>
+          <li>Automated deployments using Docker Stack and Compose with rolling updates, reducing release downtime by 30%</li>
+          <li>Managed Argo CD to deploy workloads to Kubernetes clusters; administered Linux (RHEL) servers</li>
+          <li>Automated maintenance tasks using Bash and Python scripts, saving 10+ hours per week</li>
+          <li>Optimized AWS resource usage, reducing cloud costs by 15% via cleanup automation and lifecycle policies</li>
+          <li>Implemented GitHub branching governance, improving code review efficiency by 20%</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="sec-num">04 /</div>
+    <h2 class="sec-title">Key <em>Projects</em></h2>
+    <div class="projects-grid">
+      <div class="proj-card">
+        <div class="proj-top">
+          <div class="proj-icon">🛒</div>
+          <a href="https://github.com/Ashok-6889/microservices-project" target="_blank" class="proj-link">GitHub ↗</a>
+        </div>
+        <div class="proj-title">Cloud-Native E-Commerce Microservices</div>
+        <div class="proj-desc">
+          Designed and implemented a cloud-native e-commerce application using microservices architecture. Developed multiple independent services including adservice, cartservice, checkoutservice, paymentservice, emailservice, and currencyservice. Implemented CI/CD pipelines using Jenkins to automate build, test, Docker image creation, and Kubernetes deployment with scalability and fault tolerance.
+        </div>
+        <div class="proj-tags">
+          <span class="proj-tag">Microservices</span>
+          <span class="proj-tag">Kubernetes</span>
+          <span class="proj-tag">Docker</span>
+          <span class="proj-tag">Jenkins CI/CD</span>
+          <span class="proj-tag">AWS</span>
+          <span class="proj-tag">Cloud-Native</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="sec-num">05 /</div>
+    <h2 class="sec-title">Get in <em>Touch</em></h2>
+    <div class="contact-wrap" style="grid-template-columns:1fr;">
+      <div>
+        <p class="contact-desc">Open to exciting DevOps and cloud engineering opportunities. Let's build something reliable and scalable together.</p>
+        <div class="c-links">
+          <a href="mailto:ashoknelluri34@gmail.com" class="c-link">
+            <div class="c-ico">✉️</div>ashoknelluri34@gmail.com
+          </a>
+          <a href="tel:+919177134368" class="c-link">
+            <div class="c-ico">📱</div>+91 9177134368
+          </a>
+          <span class="c-link" style="cursor:default;">
+            <div class="c-ico">📍</div>Hyderabad, India
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="foot-name">Ashok <span>Nelluri</span></span>
+  <p>© 2025 Ashok Nelluri — DevOps Engineer · Hyderabad, India</p>
+</footer>
+
+<script>
+  // Theme toggle
+  const html = document.documentElement;
+  const btn  = document.getElementById('themeBtn');
+  btn.addEventListener('click', () => {
+    const t = html.dataset.theme === 'dark' ? 'light' : 'dark';
+    html.dataset.theme = t;
+    localStorage.setItem('theme', t);
+  });
+  const saved = localStorage.getItem('theme');
+  if(saved) html.dataset.theme = saved;
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.about-card,.sk-card,.exp-item,.proj-card').forEach(el => obs.observe(el));
+
+  // Stagger
+  document.querySelectorAll('.sk-card').forEach((el,i)  => el.style.transitionDelay = (i*0.07)+'s');
+  document.querySelectorAll('.about-card').forEach((el,i) => el.style.transitionDelay = (i*0.1)+'s');
+
+  // Form
+  function handleSubmit(e){
+    e.preventDefault();
+    const b = e.target.querySelector('.btn-send');
+    b.textContent = 'Sent! ✓';
+    b.style.background = 'linear-gradient(135deg,#059669,#10B981)';
+    setTimeout(() => { b.textContent = 'Send Message →'; b.style.background = ''; e.target.reset(); }, 3000);
+  }
+</script>
+</body>
+</html>
